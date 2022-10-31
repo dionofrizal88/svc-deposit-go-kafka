@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package model;
+option go_package = "deposit/model";
+
+message Wallet {
+    string wallet_id = 1;
+    float amount = 2;
+}
+
+message WalletHistory {
+    repeated Wallet list = 1;
+}
+
+message WalletId {
+    string wallet_id = 1;
+}
+
+message WalletHistoryById {
+    map<string, WalletHistory> list = 1;
+}
+
+import "google/protobuf/Empty.proto";
+
+service Deposits {
+    rpc List(WalletId) returns (WalletHistory) {}
+    rpc Deposit(Wallet) returns (google.protobuf.Empty) {}
+}
